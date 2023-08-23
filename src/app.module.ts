@@ -1,11 +1,13 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
+
 import { PrismaService } from './prisma.service';
+import { AuthModule } from './auth/auth.module';
+import { CartModule } from './cart/cart.module';
 
 @Module({
-  imports: [ forwardRef(() => AuthModule),],
+  imports: [AuthModule, CartModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })

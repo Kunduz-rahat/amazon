@@ -8,13 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
-const prisma_1 = require("prisma");
-const faker_1 = require("@faker-js/faker");
+const prisma_service_1 = require("../prisma.service");
 const argon2_1 = require("argon2");
+const faker_1 = require("@faker-js/faker");
 let AuthService = exports.AuthService = class AuthService {
     constructor(prisma) {
         this.prisma = prisma;
@@ -26,24 +25,21 @@ let AuthService = exports.AuthService = class AuthService {
             },
         });
         if (oldUser)
-            throw new common_1.BadRequestException('Такой пользователь уже существует');
+            throw new common_1.BadRequestException('Такой пользователь существует');
         const user = await this.prisma.user.create({
             data: {
                 email: dto.email,
                 name: faker_1.faker.name.firstName(),
                 avatarPath: faker_1.faker.image.avatar(),
-                phone: faker_1.faker.phone.number('+ 996 (###) ### ###'),
+                phone: faker_1.faker.phone.number('+996 (###) ### ###'),
                 password: await (0, argon2_1.hash)(dto.password)
             }
         });
         return user;
     }
-    async issueTokens(userId) {
-        const data = { id: userId };
-    }
 };
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [typeof (_a = typeof prisma_1.PrismaService !== "undefined" && prisma_1.PrismaService) === "function" ? _a : Object])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

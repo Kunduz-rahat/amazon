@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { PrismaService } from 'prisma';
-import {faker} from '@faker-js/faker'
-import {hash} from 'argon2'
+import { PrismaService } from 'src/prisma.service';
 import { AuthDto } from './auth.dto';
+import {hash} from 'argon2'
+import {faker} from '@faker-js/faker'
 @Injectable()
 export class AuthService {
   constructor(private prisma: PrismaService) {}
@@ -12,21 +12,16 @@ export class AuthService {
         email: dto.email,
       },
     });
-    if (oldUser)
-      throw new BadRequestException('Такой пользователь уже существует');
+    if (oldUser) throw new BadRequestException('Такой пользователь существует');
     const user = await this.prisma.user.create({
-      data: {
-        email: dto.email,
-        name:faker.name.firstName(),
-        avatarPath:faker.image.avatar(),
-        phone:faker.phone.number('+ 996 (###) ### ###'), 
-        password: await hash(dto.password)
-      }
-    });
+        data:{
+            email:dto.email,
+            name:faker.name.firstName(),
+            avatarPath:faker.image.avatar(),
+            phone:faker.phone.number('+996 (###) ### ###'),
+            password: await hash(dto.password)
+        }
+    })
     return user
-  }
-  private async issueTokens(userId:number){
-    const data = {id:userId}
-    
   }
 }

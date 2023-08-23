@@ -37,10 +37,27 @@ let AuthService = exports.AuthService = class AuthService {
                 password: await (0, argon2_1.hash)(dto.password),
             },
         });
-        return user;
+        const tokens = await this.issueTokens(user.id);
+        return {
+            user: this.returnUserFields(user),
+            ...tokens,
+        };
     }
-    async issueTokins(userId) {
+    async issueTokens(userId) {
         const data = { id: userId };
+        const accessToken = this.jwt.sign(data, {
+            expiresIn: '1h',
+        });
+        const refreshToken = this.jwt.sign(data, {
+            expiresIn: '7d',
+        });
+        return { accessToken, refreshToken };
+    }
+    returnUserFields(user) {
+        return {
+            id: user.id,
+            email: user.email,
+        };
     }
 };
 exports.AuthService = AuthService = __decorate([

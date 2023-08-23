@@ -14,9 +14,11 @@ const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma.service");
 const argon2_1 = require("argon2");
 const faker_1 = require("@faker-js/faker");
+const jwt_1 = require("@nestjs/jwt");
 let AuthService = exports.AuthService = class AuthService {
-    constructor(prisma) {
+    constructor(prisma, jwt) {
         this.prisma = prisma;
+        this.jwt = jwt;
     }
     async register(dto) {
         const oldUser = await this.prisma.user.findUnique({
@@ -32,14 +34,18 @@ let AuthService = exports.AuthService = class AuthService {
                 name: faker_1.faker.name.firstName(),
                 avatarPath: faker_1.faker.image.avatar(),
                 phone: faker_1.faker.phone.number('+996 (###) ### ###'),
-                password: await (0, argon2_1.hash)(dto.password)
-            }
+                password: await (0, argon2_1.hash)(dto.password),
+            },
         });
         return user;
+    }
+    async issueTokins(userId) {
+        const data = { id: userId };
     }
 };
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        jwt_1.JwtService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

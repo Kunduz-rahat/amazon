@@ -1,8 +1,10 @@
 import { PrismaService } from 'src/prisma.service';
 import { AuthDto } from './auth.dto';
+import { JwtService } from '@nestjs/jwt';
 export declare class AuthService {
     private prisma;
-    constructor(prisma: PrismaService);
+    private jwt;
+    constructor(prisma: PrismaService, jwt: JwtService);
     register(dto: AuthDto): Promise<{
         id: number;
         email: string;
@@ -13,4 +15,5 @@ export declare class AuthService {
         avatarPath: string;
         phone: string;
     }>;
+    private issueTokins;
 }

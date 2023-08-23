@@ -5,9 +5,11 @@ import { AppService } from './app.service';
 import { PrismaService } from './prisma.service';
 import { AuthModule } from './auth/auth.module';
 import { CartModule } from './cart/cart.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [AuthModule, CartModule],
+  imports: [ConfigModule.forRoot(),
+    AuthModule, CartModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })

@@ -11,13 +11,62 @@ datasource db {
 }
 
 model User {
-  id    Int     @default(autoincrement()) @id
-  email String  @unique
-  name  String @unique
-  password String
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
+  name       String   @unique
+  password   String
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  avatarPath String   @default("/uploads/default-avatar.png") @map("avatar_path")
+  phone      String   @default("")
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  name        String   @unique
+  description String
+  slug        String   @unique
+  images      String[]
+  price       Int
+  // category Category
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  avatarPath String @default("/uploads/default-avatar.png") @map("avatar_path")
-  phone String @default("")
-  
+  name      String   @unique
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  text      String
+  rating    Int
+}
+
+model Order {
+  id        Int         @id @default(autoincrement())
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  status    OrderStatus @default(PENDING)
+  // items    OrderItem[]
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  quantity  Int
+  price     Int
+}
+
+enum OrderStatus {
+  PENDING
+  PAYED
+  SHIPPED
+  DELIVERED
 }

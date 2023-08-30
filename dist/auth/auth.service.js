@@ -31,7 +31,7 @@ let AuthService = exports.AuthService = class AuthService {
     }
     async getNewTokens(refreshToken) {
         const result = await this.jwt.verifyAsync(refreshToken);
-        if (result)
+        if (!result)
             throw new common_1.UnauthorizedException('Invalid refresh token');
         const user = await this.prisma.user.findUnique({
             where: {

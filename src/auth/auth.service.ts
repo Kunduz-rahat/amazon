@@ -7,7 +7,7 @@ import {
 import { PrismaService } from 'src/prisma.service';
 import { AuthDto } from './dto/auth.dto';
 import { hash } from 'argon2';
-import { faker, th } from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import { verify } from 'argon2';
@@ -27,7 +27,7 @@ export class AuthService {
   }
   async getNewTokens(refreshToken: string) {
     const result = await this.jwt.verifyAsync(refreshToken);
-    if (result) throw new UnauthorizedException('Invalid refresh token');
+    if (!result) throw new UnauthorizedException('Invalid refresh token');
 
     const user = await this.prisma.user.findUnique({
       where: {

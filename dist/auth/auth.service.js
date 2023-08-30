@@ -15,10 +15,34 @@ const prisma_service_1 = require("../prisma.service");
 const argon2_1 = require("argon2");
 const faker_1 = require("@faker-js/faker");
 const jwt_1 = require("@nestjs/jwt");
+const argon2_2 = require("argon2");
 let AuthService = exports.AuthService = class AuthService {
     constructor(prisma, jwt) {
         this.prisma = prisma;
         this.jwt = jwt;
+    }
+    async login(dto) {
+        const user = await this.validateUser(dto);
+        const tokens = await this.issueTokens(user.id);
+        return {
+            user: this.returnUserFields(user),
+            ...tokens,
+        };
+    }
+    async getNewTokens(refreshToken) {
+        const result = await this.jwt.verifyAsync(refreshToken);
+        if (result)
+            throw new common_1.UnauthorizedException('Invalid refresh token');
+        const user = await this.prisma.user.findUnique({
+            where: {
+                id: result.id,
+            },
+        });
+        const tokens = await this.issueTokens(user.id);
+        return {
+            user: this.returnUserFields(user),
+            ...tokens,
+        };
     }
     async register(dto) {
         const oldUser = await this.prisma.user.findUnique({
@@ -58,6 +82,19 @@ let AuthService = exports.AuthService = class AuthService {
             id: user.id,
             email: user.email,
         };
+    }
+    async validateUser(dto) {
+        const user = await this.prisma.user.findUnique({
+            where: {
+                email: dto.email,
+            },
+        });
+        if (!user)
+            throw new common_1.NotFoundException('User not found');
+        const isValid = await (0, argon2_2.verify)(user.password, dto.password);
+        if (!isValid)
+            throw new common_1.UnauthorizedException("Invalid password");
+        return user;
     }
 };
 exports.AuthService = AuthService = __decorate([

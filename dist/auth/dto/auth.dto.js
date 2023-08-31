@@ -20,7 +20,7 @@ __decorate([
 ], AuthDto.prototype, "email", void 0);
 __decorate([
     (0, class_validator_1.MinLength)(6, {
-        message: "Пароль должен быть не менее 6 символов"
+        message: 'Пароль должен быть не менее 6 символов',
     }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)

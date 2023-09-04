@@ -5,11 +5,9 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { UserDto } from './user.dto';
-import { tr } from '@faker-js/faker';
 import { returnUserObject } from './return-user.object';
 import { Prisma } from '@prisma/client';
 import { hash } from 'argon2';
-import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class UserService {
@@ -57,7 +55,7 @@ export class UserService {
     const user = await this.byId(userId);
     if (!user) throw new NotFoundException('User not found');
     const isExists = user.favorites.some((product) => product.id === productId);
-    return await this.prisma.user.update({
+     await this.prisma.user.update({
       where: { id: user.id },
       data: {
         favorites: {
@@ -67,5 +65,6 @@ export class UserService {
         },
       },
     });
+    return "Success"
   }
 }

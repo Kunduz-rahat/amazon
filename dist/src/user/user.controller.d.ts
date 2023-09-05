@@ -56,5 +56,7 @@ export declare class UserController {
         avatarPath: string;
         phone: string;
     }>;
-    toggleFavorite(id: number, productId: string): Promise<string>;
+    toggleFavorite(id: number, productId: string): Promise<{
+        message: string;
+    }>;
 }

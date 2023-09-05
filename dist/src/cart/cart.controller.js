@@ -12,11 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CartController = void 0;
 const common_1 = require("@nestjs/common");
 const cart_service_1 = require("./cart.service");
-let CartController = exports.CartController = class CartController {
+let CartController = class CartController {
     constructor(cartService) {
         this.cartService = cartService;
     }
 };
+exports.CartController = CartController;
 exports.CartController = CartController = __decorate([
     (0, common_1.Controller)('cart'),
     __metadata("design:paramtypes", [cart_service_1.CartService])

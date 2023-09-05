@@ -3,8 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const faker_1 = require("@faker-js/faker");
 const client_1 = require("@prisma/client");
 const dotenv = require("dotenv");
-const generate_slug_1 = require("../src/utils/generate-slug");
-const random_number_1 = require("../src/utils/random-number");
 dotenv.config();
 const prisma = new client_1.PrismaClient();
 const createProducts = async (quantity) => {
@@ -16,17 +14,49 @@ const createProducts = async (quantity) => {
             data: {
                 name: productName,
                 description: faker_1.faker.commerce.productDescription(),
-                slug: (0, generate_slug_1.generateSlug)(productName),
-                price: +faker_1.faker.commerce.price(10, 999, 0),
-                images: Array.from({ length: (0, random_number_1.getRandomNumber)(2, 6) }).map(() => faker_1.faker.image.imageUrl()),
+                slug: faker_1.faker.helpers.slugify(productName),
+                price: +faker_1.faker.number.int({ min: 10, max: 999 }),
+                images: Array.from({
+                    length: faker_1.faker.number.int({ min: 2, max: 6 }),
+                }).map(() => faker_1.faker.image.url()),
+                category: {
+                    create: {
+                        name: categoryName,
+                        slug: faker_1.faker.helpers.slugify(categoryName),
+                    },
+                },
+                reviews: {
+                    create: [
+                        {
+                            rating: faker_1.faker.number.int({ min: 1, max: 5 }),
+                            text: faker_1.faker.lorem.paragraph(),
+                            user: {
+                                connect: {
+                                    id: 1,
+                                },
+                            },
+                        },
+                        {
+                            rating: faker_1.faker.number.int({ min: 1, max: 5 }),
+                            text: faker_1.faker.lorem.paragraph(),
+                            user: {
+                                connect: {
+                                    id: 1,
+                                },
+                            },
+                        },
+                    ],
+                },
             },
         });
+        products.push(product);
+        console.log(product.price);
     }
     console.log(`Created ${products.length} products`);
 };
 async function main() {
     console.log('Start seeding');
-    await createProducts(10);
+    await createProducts(5);
 }
 main()
     .catch((e) => console.log(e))

@@ -9,7 +9,7 @@ const translit = (str: string) => {
     );
   let result = '';
   for (let index = 0, l = str.length; index < l; index++) {
-    let s = str.charAt(index),
+    const s = str.charAt(index),
       n = ru.indexOf(s);
     if (n >= 0) {
       result += en[n];

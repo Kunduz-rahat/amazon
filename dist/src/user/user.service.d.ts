@@ -5,10 +5,10 @@ export declare class UserService {
     private prisma;
     constructor(prisma: PrismaService);
     byId(id: number, selectObject?: Prisma.UserSelect): Promise<{
-        email: string;
-        password: string;
         id: number;
+        email: string;
         name: string;
+        password: string;
         createdAt: Date;
         updatedAt: Date;
         avatarPath: string;
@@ -57,5 +57,7 @@ export declare class UserService {
         avatarPath: string;
         phone: string;
     }>;
-    toggleFavorite(productId: number, userId: number): Promise<string>;
+    toggleFavorite(productId: number, userId: number): Promise<{
+        message: string;
+    }>;
 }

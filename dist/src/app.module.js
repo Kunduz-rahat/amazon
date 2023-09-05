@@ -15,12 +15,16 @@ const auth_module_1 = require("./auth/auth.module");
 const cart_module_1 = require("./cart/cart.module");
 const config_1 = require("@nestjs/config");
 const user_module_1 = require("./user/user.module");
-let AppModule = exports.AppModule = class AppModule {
+const product_module_1 = require("./product/product.module");
+const review_module_1 = require("./review/review.module");
+const category_module_1 = require("./category/category.module");
+let AppModule = class AppModule {
 };
+exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [config_1.ConfigModule.forRoot(),
-            auth_module_1.AuthModule, cart_module_1.CartModule, user_module_1.UserModule],
+            auth_module_1.AuthModule, cart_module_1.CartModule, user_module_1.UserModule, product_module_1.ProductModule, review_module_1.ReviewModule, category_module_1.CategoryModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, prisma_service_1.PrismaService],
     })

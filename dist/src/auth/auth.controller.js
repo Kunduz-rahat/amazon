@@ -17,7 +17,7 @@ const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const auth_dto_1 = require("./dto/auth.dto");
 const refresh_token_dto_1 = require("./dto/refresh-token.dto");
-let AuthController = exports.AuthController = class AuthController {
+let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
@@ -31,6 +31,7 @@ let AuthController = exports.AuthController = class AuthController {
         return this.authService.getNewTokens(dto.refreshToken);
     }
 };
+exports.AuthController = AuthController;
 __decorate([
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     (0, common_1.HttpCode)(200),

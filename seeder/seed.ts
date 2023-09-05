@@ -1,8 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { PrismaClient, Product } from '@prisma/client';
 import * as dotenv from 'dotenv';
-import { generateSlug } from 'src/utils/generate-slug';
-import { getRandomNumber } from 'src/utils/random-number';
+
 dotenv.config();
 
 const prisma = new PrismaClient();
@@ -18,20 +17,51 @@ const createProducts = async (quantity: number) => {
       data: {
         name: productName,
         description: faker.commerce.productDescription(),
-        slug: generateSlug(productName),
-        price: +faker.commerce.price(10, 999, 0),
-        images: Array.from({ length: getRandomNumber(2, 6) }).map(() =>
-          faker.image.imageUrl(),
-        ),
+        slug: faker.helpers.slugify(productName),
+        price: +faker.number.int({ min: 10, max: 999 }),
+        
+        images: Array.from({
+          length: faker.number.int({ min: 2, max: 6 }),
+        }).map(() => faker.image.url()),
+        category: {
+          create: {
+            name: categoryName,
+            slug: faker.helpers.slugify(categoryName),
+          },
+        },
+        reviews: {
+          create: [
+            {
+              rating: faker.number.int({ min: 1, max: 5 }),
+              text: faker.lorem.paragraph(),
+              user: {
+                connect: {
+                  id: 1,
+                },
+              },
+            },
+            {
+              rating: faker.number.int({ min: 1, max: 5 }),
+              text: faker.lorem.paragraph(),
+              user: {
+                connect: {
+                  id: 1,
+                },
+              },
+            },
+          ],
+        },
       },
     });
+    products.push(product);
+    console.log(product.price)
   }
   console.log(`Created ${products.length} products`);
 };
 
 async function main() {
   console.log('Start seeding');
-  await createProducts(10);
+  await createProducts(5);
 }
 
 main()

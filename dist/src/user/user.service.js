@@ -14,7 +14,7 @@ const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma.service");
 const return_user_object_1 = require("./return-user.object");
 const argon2_1 = require("argon2");
-let UserService = exports.UserService = class UserService {
+let UserService = class UserService {
     constructor(prisma) {
         this.prisma = prisma;
     }
@@ -72,9 +72,10 @@ let UserService = exports.UserService = class UserService {
                 },
             },
         });
-        return "Success";
+        return { message: "Success" };
     }
 };
+exports.UserService = UserService;
 exports.UserService = UserService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])

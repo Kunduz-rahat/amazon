@@ -6,7 +6,7 @@ const translit = (str) => {
     const en = 'A-a-B-b-V-v-G-g-D-d-E-e-I-i-J-j-K-k-L-l-M-m-N-n-O-o-P-p-R-r-S-s-T-t-U-u-F-f-H-h'.split('-');
     let result = '';
     for (let index = 0, l = str.length; index < l; index++) {
-        let s = str.charAt(index), n = ru.indexOf(s);
+        const s = str.charAt(index), n = ru.indexOf(s);
         if (n >= 0) {
             result += en[n];
         }

@@ -4,10 +4,10 @@ export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
     getProfile(id: number): Promise<{
-        email: string;
-        password: string;
         id: number;
+        email: string;
         name: string;
+        password: string;
         createdAt: Date;
         updatedAt: Date;
         avatarPath: string;

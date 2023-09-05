@@ -4,13 +4,13 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { verify, hash } from 'argon2';
+import { faker } from '@faker-js/faker';
+import { User } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { AuthDto } from './dto/auth.dto';
-import { hash } from 'argon2';
-import { faker } from '@faker-js/faker';
-import { JwtService } from '@nestjs/jwt';
-import { User } from '@prisma/client';
-import { verify } from 'argon2';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -18,13 +18,14 @@ export class AuthService {
     private jwt: JwtService,
   ) {}
   async login(dto: AuthDto) {
-    const user = await this.validateUser(dto)
+    const user = await this.validateUser(dto);
     const tokens = await this.issueTokens(user.id);
     return {
       user: this.returnUserFields(user),
       ...tokens,
     };
   }
+
   async getNewTokens(refreshToken: string) {
     const result = await this.jwt.verifyAsync(refreshToken);
     if (!result) throw new UnauthorizedException('Invalid refresh token');
@@ -40,6 +41,7 @@ export class AuthService {
       ...tokens,
     };
   }
+
   async register(dto: AuthDto) {
     // Получение старого юзера
 
@@ -70,6 +72,7 @@ export class AuthService {
       ...tokens,
     };
   }
+
   private async issueTokens(userId: number) {
     const data = { id: userId };
     const accessToken = this.jwt.sign(data, {
@@ -97,8 +100,8 @@ export class AuthService {
       },
     });
     if (!user) throw new NotFoundException('User not found');
-    const isValid = await verify(user.password, dto.password)
-    if(!isValid) throw new UnauthorizedException("Invalid password")
-    return user
+    const isValid = await verify(user.password, dto.password);
+    if (!isValid) throw new UnauthorizedException('Invalid password');
+    return user;
   }
 }

@@ -11,11 +11,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
-const prisma_service_1 = require("../prisma.service");
+const jwt_1 = require("@nestjs/jwt");
 const argon2_1 = require("argon2");
 const faker_1 = require("@faker-js/faker");
-const jwt_1 = require("@nestjs/jwt");
-const argon2_2 = require("argon2");
+const prisma_service_1 = require("../prisma.service");
 let AuthService = exports.AuthService = class AuthService {
     constructor(prisma, jwt) {
         this.prisma = prisma;
@@ -91,9 +90,9 @@ let AuthService = exports.AuthService = class AuthService {
         });
         if (!user)
             throw new common_1.NotFoundException('User not found');
-        const isValid = await (0, argon2_2.verify)(user.password, dto.password);
+        const isValid = await (0, argon2_1.verify)(user.password, dto.password);
         if (!isValid)
-            throw new common_1.UnauthorizedException("Invalid password");
+            throw new common_1.UnauthorizedException('Invalid password');
         return user;
     }
 };

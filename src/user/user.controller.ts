@@ -5,7 +5,6 @@ import {
   HttpCode,
   Param,
   Patch,
-  Post,
   Put,
   UsePipes,
   ValidationPipe,
@@ -27,6 +26,9 @@ export class UserController {
     return this.userService.byId(id);
   }
 
+
+  // update profile
+  
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Auth()

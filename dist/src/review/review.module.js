@@ -10,13 +10,14 @@ exports.ReviewModule = void 0;
 const common_1 = require("@nestjs/common");
 const review_service_1 = require("./review.service");
 const review_controller_1 = require("./review.controller");
+const prisma_service_1 = require("../prisma.service");
 let ReviewModule = class ReviewModule {
 };
 exports.ReviewModule = ReviewModule;
 exports.ReviewModule = ReviewModule = __decorate([
     (0, common_1.Module)({
         controllers: [review_controller_1.ReviewController],
-        providers: [review_service_1.ReviewService],
+        providers: [review_service_1.ReviewService, prisma_service_1.PrismaService],
     })
 ], ReviewModule);
 //# sourceMappingURL=review.module.js.map

@@ -1,8 +1,2 @@
-export declare const returnUserObject: {
-    id: boolean;
-    email: boolean;
-    name: boolean;
-    avatarPath: boolean;
-    password: boolean;
-    phone: boolean;
-};
+import { Prisma } from "@prisma/client";
+export declare const returnUserObject: Prisma.UserSelect;

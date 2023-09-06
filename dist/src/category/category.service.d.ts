@@ -25,6 +25,50 @@ export declare class CategoryService {
             products: number;
         };
     }>;
+    bySlug(slug: string): Promise<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        name: string;
+        slug: string;
+        products: {
+            id: number;
+            createdAt: Date;
+            updatedAt: Date;
+            name: string;
+            description: string;
+            slug: string;
+            images: string[];
+            price: number;
+            categoryId: number;
+            userId: number;
+        }[];
+        _count: {
+            products: number;
+        };
+    }>;
+    getAll(): Promise<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        name: string;
+        slug: string;
+        products: {
+            id: number;
+            createdAt: Date;
+            updatedAt: Date;
+            name: string;
+            description: string;
+            slug: string;
+            images: string[];
+            price: number;
+            categoryId: number;
+            userId: number;
+        }[];
+        _count: {
+            products: number;
+        };
+    }[]>;
     update(id: number, dto: CategoryDto): Promise<{
         id: number;
         createdAt: Date;

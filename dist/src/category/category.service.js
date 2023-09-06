@@ -27,6 +27,18 @@ let CategoryService = class CategoryService {
             throw new Error('Category not found');
         return category;
     }
+    async bySlug(slug) {
+        const category = await this.prisma.category.findUnique({
+            where: { slug },
+            select: return_category_object_1.returnCategoryObject,
+        });
+        if (!category)
+            throw new Error('Category not found');
+        return category;
+    }
+    async getAll() {
+        return this.prisma.category.findMany({ select: return_category_object_1.returnCategoryObject });
+    }
     async update(id, dto) {
         return this.prisma.category.update({
             where: { id },
@@ -38,14 +50,15 @@ let CategoryService = class CategoryService {
     }
     async delete(id) {
         return this.prisma.category.delete({
-            where: { id }
+            where: { id },
         });
     }
     async create() {
         return this.prisma.category.create({
             data: {
-                name: "", slug: ''
-            }
+                name: '',
+                slug: '',
+            },
         });
     }
 };

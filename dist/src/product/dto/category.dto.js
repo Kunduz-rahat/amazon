@@ -9,23 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProductService = void 0;
-const common_1 = require("@nestjs/common");
-const prisma_service_1 = require("../prisma.service");
-const return_product_object_1 = require("./return-product.object");
-let ProductService = class ProductService {
-    constructor(prisma) {
-        this.prisma = prisma;
-    }
-    async findAll() {
-        return this.prisma.product.findMany({
-            select: return_product_object_1.returnProductObject,
-        });
-    }
-};
-exports.ProductService = ProductService;
-exports.ProductService = ProductService = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
-], ProductService);
-//# sourceMappingURL=product.service.js.map
+exports.CategoryDto = void 0;
+const class_validator_1 = require("class-validator");
+class CategoryDto {
+}
+exports.CategoryDto = CategoryDto;
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CategoryDto.prototype, "name", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CategoryDto.prototype, "slug", void 0);
+//# sourceMappingURL=category.dto.js.map

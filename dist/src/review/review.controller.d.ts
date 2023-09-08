@@ -43,13 +43,4 @@ export declare class ReviewController {
             userId: number;
         };
     }[]>;
-    update(id: string, dto: ReviewDto): Promise<{
-        id: number;
-        createdAt: Date;
-        updatedAt: Date;
-        text: string;
-        rating: number;
-        userId: number;
-        productId: number;
-    }>;
 }

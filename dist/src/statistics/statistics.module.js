@@ -11,13 +11,14 @@ const common_1 = require("@nestjs/common");
 const statistics_service_1 = require("./statistics.service");
 const statistics_controller_1 = require("./statistics.controller");
 const prisma_service_1 = require("../prisma.service");
+const user_service_1 = require("../user/user.service");
 let StatisticsModule = class StatisticsModule {
 };
 exports.StatisticsModule = StatisticsModule;
 exports.StatisticsModule = StatisticsModule = __decorate([
     (0, common_1.Module)({
         controllers: [statistics_controller_1.StatisticsController],
-        providers: [statistics_service_1.StatisticsService, prisma_service_1.PrismaService],
+        providers: [statistics_service_1.StatisticsService, prisma_service_1.PrismaService, user_service_1.UserService],
     })
 ], StatisticsModule);
 //# sourceMappingURL=statistics.module.js.map

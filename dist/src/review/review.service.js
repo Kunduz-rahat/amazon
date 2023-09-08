@@ -45,15 +45,6 @@ let ReviewService = class ReviewService {
             select: return_review_object_1.returnReviewObject,
         });
     }
-    async update(id, dto) {
-        return this.prisma.review.update({
-            where: { id },
-            data: {
-                text: dto.text,
-                rating: dto.rating,
-            },
-        });
-    }
     async getAverageValueByProductId(productId) {
         return this.prisma.review
             .aggregate({

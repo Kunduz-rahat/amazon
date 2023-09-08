@@ -43,15 +43,6 @@ export declare class ReviewService {
             userId: number;
         };
     }[]>;
-    update(id: number, dto: ReviewDto): Promise<{
-        id: number;
-        createdAt: Date;
-        updatedAt: Date;
-        text: string;
-        rating: number;
-        userId: number;
-        productId: number;
-    }>;
     getAverageValueByProductId(productId: number): Promise<{
         rating: number;
     }>;

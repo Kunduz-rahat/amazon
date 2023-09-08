@@ -40,15 +40,15 @@ export class ReviewService {
   }
 
   // обновляем отзывы
-  async update(id: number, dto: ReviewDto) {
-    return this.prisma.review.update({
-      where: { id },
-      data: {
-        text: dto.text,
-        rating: dto.rating,
-      },
-    });
-  }
+  // async update(id: number, dto: ReviewDto) {
+  //   return this.prisma.review.update({
+  //     where: { id },
+  //     data: {
+  //       text: dto.text,
+  //       rating: dto.rating,
+  //     },
+  //   });
+  // }
 
   // получение средного отзыва
   async getAverageValueByProductId(productId: number) {

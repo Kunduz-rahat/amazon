@@ -38,12 +38,12 @@ export class ReviewController {
   }
 
  
-  @UsePipes(new ValidationPipe())
-  @HttpCode(200)
-  @Auth()
-  @Put(':id')
-  async update(@Param('id') id: string, @Body() dto: ReviewDto) {
-    return this.reviewService.update(+id, dto);
-  }
+  // @UsePipes(new ValidationPipe())
+  // @HttpCode(200)
+  // @Auth()
+  // @Put(':id')
+  // async update(@Param('id') id: string, @Body() dto: ReviewDto) {
+  //   return this.reviewService.update(+id, dto);
+  // }
 
 }

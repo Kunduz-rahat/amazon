@@ -28,9 +28,6 @@ let ReviewController = class ReviewController {
     async getAll() {
         return this.reviewService.getAll();
     }
-    async update(id, dto) {
-        return this.reviewService.update(+id, dto);
-    }
 };
 exports.ReviewController = ReviewController;
 __decorate([
@@ -51,17 +48,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ReviewController.prototype, "getAll", null);
-__decorate([
-    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
-    (0, common_1.HttpCode)(200),
-    (0, auth_decorator_1.Auth)(),
-    (0, common_1.Put)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, review_dto_1.ReviewDto]),
-    __metadata("design:returntype", Promise)
-], ReviewController.prototype, "update", null);
 exports.ReviewController = ReviewController = __decorate([
     (0, common_1.Controller)('reviews'),
     __metadata("design:paramtypes", [review_service_1.ReviewService])

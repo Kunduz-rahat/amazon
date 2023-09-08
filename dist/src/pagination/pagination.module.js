@@ -9,15 +9,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PaginationModule = void 0;
 const common_1 = require("@nestjs/common");
 const pagination_service_1 = require("./pagination.service");
-const pagination_controller_1 = require("./pagination.controller");
 const prisma_service_1 = require("../prisma.service");
 let PaginationModule = class PaginationModule {
 };
 exports.PaginationModule = PaginationModule;
 exports.PaginationModule = PaginationModule = __decorate([
     (0, common_1.Module)({
-        controllers: [pagination_controller_1.PaginationController],
         providers: [pagination_service_1.PaginationService, prisma_service_1.PrismaService],
+        exports: [pagination_service_1.PaginationService]
     })
 ], PaginationModule);
 //# sourceMappingURL=pagination.module.js.map

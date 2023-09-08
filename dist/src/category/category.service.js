@@ -18,6 +18,19 @@ let CategoryService = class CategoryService {
     constructor(prisma) {
         this.prisma = prisma;
     }
+    async create(dto) {
+        try {
+            return this.prisma.category.create({
+                data: {
+                    name: '',
+                    slug: '',
+                },
+            });
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
     async byId(id) {
         const category = await this.prisma.category.findUnique({
             where: { id },
@@ -33,7 +46,7 @@ let CategoryService = class CategoryService {
             select: return_category_object_1.returnCategoryObject,
         });
         if (!category)
-            throw new Error('Category not found');
+            throw new common_1.NotFoundException('Category not found');
         return category;
     }
     async getAll() {
@@ -53,13 +66,22 @@ let CategoryService = class CategoryService {
             where: { id },
         });
     }
-    async create() {
-        return this.prisma.category.create({
-            data: {
-                name: '',
-                slug: '',
+    async create1(dto) {
+        const oldCategory = await this.prisma.category.findUnique({
+            where: {
+                name: dto.name,
+                slug: dto.slug
             },
         });
+        if (oldCategory)
+            throw new common_1.BadRequestException('Такая категория уже существует');
+        const category = await this.prisma.category.create({
+            data: {
+                name: dto.name,
+                slug: dto.slug,
+            },
+        });
+        return category;
     }
 };
 exports.CategoryService = CategoryService;

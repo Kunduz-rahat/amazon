@@ -1,26 +1,62 @@
 import { Injectable } from '@nestjs/common';
-import { CreateReviewDto } from './dto/create-review.dto';
-import { UpdateReviewDto } from './dto/update-review.dto';
+import { PrismaService } from 'src/prisma.service';
+import { returnReviewObject } from './return-review.object';
+import { ReviewDto } from './dto/review.dto';
 
 @Injectable()
 export class ReviewService {
-  create(createReviewDto: CreateReviewDto) {
-    return 'This action adds a new review';
+  constructor(private prisma: PrismaService) {}
+
+  // создаем новый отзыв
+
+  async create(userId: number, dto: ReviewDto, productId: number) {
+    try {
+      return this.prisma.review.create({
+        data: {
+          ...dto,
+          product: {
+            connect: {
+              id: productId,
+            },
+          },
+          user: {
+            connect: {
+              id: userId,
+            },
+          },
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
-  findAll() {
-    return `This action returns all review`;
+  // получаем все отзывы
+  async getAll() {
+    return this.prisma.review.findMany({
+      orderBy: { createdAt: 'desc' },
+      select: returnReviewObject,
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} review`;
+  // обновляем отзывы
+  async update(id: number, dto: ReviewDto) {
+    return this.prisma.review.update({
+      where: { id },
+      data: {
+        text: dto.text,
+        rating: dto.rating,
+      },
+    });
   }
 
-  update(id: number, updateReviewDto: UpdateReviewDto) {
-    return `This action updates a #${id} review`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} review`;
+  // получение средного отзыва
+  async getAverageValueByProductId(productId: number) {
+    return this.prisma.review
+      .aggregate({
+        where: { productId },
+        _avg: { rating: true },
+      })
+      .then((data) => data._avg);
   }
 }

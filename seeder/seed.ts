@@ -17,7 +17,7 @@ const createProducts = async (quantity: number) => {
       data: {
         name: productName,
         description: faker.commerce.productDescription(),
-        slug: faker.helpers.slugify(productName),
+        slug: faker.helpers.slugify(productName).toLowerCase(),
         price: +faker.number.int({ min: 10, max: 999 }),
         
         images: Array.from({
@@ -26,7 +26,7 @@ const createProducts = async (quantity: number) => {
         category: {
           create: {
             name: categoryName,
-            slug: faker.helpers.slugify(categoryName),
+            slug: faker.helpers.slugify(categoryName).toLowerCase(),
           },
         },
         reviews: {

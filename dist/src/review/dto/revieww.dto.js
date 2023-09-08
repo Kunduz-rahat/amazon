@@ -22,4 +22,4 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CategoryDto.prototype, "slug", void 0);
-//# sourceMappingURL=category.dto.js.map
+//# sourceMappingURL=revieww.dto.js.map

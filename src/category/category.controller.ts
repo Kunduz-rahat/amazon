@@ -5,8 +5,8 @@ import {
   Get,
   HttpCode,
   Param,
-  Patch,
   Post,
+  Put,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -18,46 +18,52 @@ import { CategoryDto } from './category.dto';
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @Get()
-  async getAll() {
-    return this.categoryService.getAll();
-  }
-
-  @Get(':slug')
+  @Get('by-slug/:slug')
   async getBySlug(@Param('slug') slug: string) {
     return this.categoryService.bySlug(slug);
   }
-  
+
   @Get(':id')
   @Auth()
   async getById(@Param('id') id: string) {
     return this.categoryService.byId(+id);
   }
-  
+
+  @Get()
+  async getAll() {
+    return this.categoryService.getAll();
+  }
 
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Auth()
-  @Patch(':id')
-  async update(
-    @Param('categoryId') categoryId: string,
-    @Body() dto: CategoryDto,
-  ) {
-    return this.categoryService.update(+categoryId, dto);
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() dto: CategoryDto) {
+    return this.categoryService.update(+id, dto);
   }
+
+  
+
+
+  // @UsePipes(new ValidationPipe())
+  // @HttpCode(200)
+  // @Auth()
+  // @Post()
+  // async create(@Body() dto:CategoryDto) {
+  //   return this.categoryService.create(dto);
+  // }
 
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Auth()
   @Post()
-  async create() {
-    return this.categoryService.create();
+  async create1(@Body() dto:CategoryDto) {
+    return this.categoryService.create1(dto);
   }
-
   @HttpCode(200)
   @Auth()
   @Delete(':id')
-  async delete(@Param('categoryId') categoryId: string) {
-    return this.categoryService.delete(+categoryId);
+  async delete(@Param('id') id: string) {
+    return this.categoryService.delete(+id);
   }
 }

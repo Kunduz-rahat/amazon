@@ -15,66 +15,55 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReviewController = void 0;
 const common_1 = require("@nestjs/common");
 const review_service_1 = require("./review.service");
-const create_review_dto_1 = require("./dto/create-review.dto");
-const update_review_dto_1 = require("./dto/update-review.dto");
+const review_dto_1 = require("./dto/review.dto");
+const auth_decorator_1 = require("../auth/decorators/auth.decorator");
+const user_decorator_1 = require("../auth/decorators/user.decorator");
 let ReviewController = class ReviewController {
     constructor(reviewService) {
         this.reviewService = reviewService;
     }
-    create(createReviewDto) {
-        return this.reviewService.create(createReviewDto);
+    createReview(id, dto, productId) {
+        return this.reviewService.create(id, dto, +productId);
     }
-    findAll() {
-        return this.reviewService.findAll();
+    async getAll() {
+        return this.reviewService.getAll();
     }
-    findOne(id) {
-        return this.reviewService.findOne(+id);
-    }
-    update(id, updateReviewDto) {
-        return this.reviewService.update(+id, updateReviewDto);
-    }
-    remove(id) {
-        return this.reviewService.remove(+id);
+    async update(id, dto) {
+        return this.reviewService.update(+id, dto);
     }
 };
 exports.ReviewController = ReviewController;
 __decorate([
-    (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
+    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
+    (0, common_1.HttpCode)(200),
+    (0, auth_decorator_1.Auth)(),
+    (0, common_1.Post)('leave/:productId'),
+    __param(0, (0, user_decorator_1.CurrentUser)('id')),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Param)('productId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_review_dto_1.CreateReviewDto]),
+    __metadata("design:paramtypes", [Number, review_dto_1.ReviewDto, String]),
     __metadata("design:returntype", void 0)
-], ReviewController.prototype, "create", null);
+], ReviewController.prototype, "createReview", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], ReviewController.prototype, "findAll", null);
+    __metadata("design:returntype", Promise)
+], ReviewController.prototype, "getAll", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], ReviewController.prototype, "findOne", null);
-__decorate([
-    (0, common_1.Patch)(':id'),
+    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
+    (0, common_1.HttpCode)(200),
+    (0, auth_decorator_1.Auth)(),
+    (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_review_dto_1.UpdateReviewDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [String, review_dto_1.ReviewDto]),
+    __metadata("design:returntype", Promise)
 ], ReviewController.prototype, "update", null);
-__decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], ReviewController.prototype, "remove", null);
 exports.ReviewController = ReviewController = __decorate([
-    (0, common_1.Controller)('review'),
+    (0, common_1.Controller)('reviews'),
     __metadata("design:paramtypes", [review_service_1.ReviewService])
 ], ReviewController);
 //# sourceMappingURL=review.controller.js.map

@@ -11,9 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
+const argon2_1 = require("argon2");
 const prisma_service_1 = require("../prisma.service");
 const return_user_object_1 = require("./return-user.object");
-const argon2_1 = require("argon2");
 let UserService = class UserService {
     constructor(prisma) {
         this.prisma = prisma;
@@ -72,7 +72,7 @@ let UserService = class UserService {
                 },
             },
         });
-        return { message: "Success" };
+        return { message: 'Success' };
     }
 };
 exports.UserService = UserService;

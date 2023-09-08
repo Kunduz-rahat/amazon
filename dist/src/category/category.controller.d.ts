@@ -3,34 +3,15 @@ import { CategoryDto } from './category.dto';
 export declare class CategoryController {
     private readonly categoryService;
     constructor(categoryService: CategoryService);
-    getAll(): Promise<{
-        id: number;
-        createdAt: Date;
-        updatedAt: Date;
-        name: string;
-        slug: string;
-        products: {
-            id: number;
-            createdAt: Date;
-            updatedAt: Date;
-            name: string;
-            description: string;
-            slug: string;
-            images: string[];
-            price: number;
-            categoryId: number;
-            userId: number;
-        }[];
-        _count: {
-            products: number;
-        };
-    }[]>;
     getBySlug(slug: string): Promise<{
         id: number;
         createdAt: Date;
         updatedAt: Date;
         name: string;
         slug: string;
+        _count: {
+            products: number;
+        };
         products: {
             id: number;
             createdAt: Date;
@@ -43,9 +24,6 @@ export declare class CategoryController {
             categoryId: number;
             userId: number;
         }[];
-        _count: {
-            products: number;
-        };
     }>;
     getById(id: string): Promise<{
         id: number;
@@ -53,6 +31,9 @@ export declare class CategoryController {
         updatedAt: Date;
         name: string;
         slug: string;
+        _count: {
+            products: number;
+        };
         products: {
             id: number;
             createdAt: Date;
@@ -65,25 +46,44 @@ export declare class CategoryController {
             categoryId: number;
             userId: number;
         }[];
+    }>;
+    getAll(): Promise<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        name: string;
+        slug: string;
         _count: {
             products: number;
         };
-    }>;
-    update(categoryId: string, dto: CategoryDto): Promise<{
+        products: {
+            id: number;
+            createdAt: Date;
+            updatedAt: Date;
+            name: string;
+            description: string;
+            slug: string;
+            images: string[];
+            price: number;
+            categoryId: number;
+            userId: number;
+        }[];
+    }[]>;
+    update(id: string, dto: CategoryDto): Promise<{
         id: number;
         createdAt: Date;
         updatedAt: Date;
         name: string;
         slug: string;
     }>;
-    create(): Promise<{
+    create1(dto: CategoryDto): Promise<{
         id: number;
         createdAt: Date;
         updatedAt: Date;
         name: string;
         slug: string;
     }>;
-    delete(categoryId: string): Promise<{
+    delete(id: string): Promise<{
         id: number;
         createdAt: Date;
         updatedAt: Date;

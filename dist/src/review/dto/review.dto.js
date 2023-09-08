@@ -9,17 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CategoryDto = void 0;
+exports.ReviewDto = void 0;
 const class_validator_1 = require("class-validator");
-class CategoryDto {
+class ReviewDto {
 }
-exports.CategoryDto = CategoryDto;
+exports.ReviewDto = ReviewDto;
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.Min)(1),
+    (0, class_validator_1.Max)(5),
+    __metadata("design:type", Number)
+], ReviewDto.prototype, "rating", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CategoryDto.prototype, "name", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], CategoryDto.prototype, "slug", void 0);
-//# sourceMappingURL=category.dto.js.map
+], ReviewDto.prototype, "text", void 0);
+//# sourceMappingURL=review.dto.js.map

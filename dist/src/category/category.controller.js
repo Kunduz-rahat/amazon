@@ -21,34 +21,28 @@ let CategoryController = class CategoryController {
     constructor(categoryService) {
         this.categoryService = categoryService;
     }
-    async getAll() {
-        return this.categoryService.getAll();
-    }
     async getBySlug(slug) {
         return this.categoryService.bySlug(slug);
     }
     async getById(id) {
         return this.categoryService.byId(+id);
     }
-    async update(categoryId, dto) {
-        return this.categoryService.update(+categoryId, dto);
+    async getAll() {
+        return this.categoryService.getAll();
     }
-    async create() {
-        return this.categoryService.create();
+    async update(id, dto) {
+        return this.categoryService.update(+id, dto);
     }
-    async delete(categoryId) {
-        return this.categoryService.delete(+categoryId);
+    async create1(dto) {
+        return this.categoryService.create1(dto);
+    }
+    async delete(id) {
+        return this.categoryService.delete(+id);
     }
 };
 exports.CategoryController = CategoryController;
 __decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], CategoryController.prototype, "getAll", null);
-__decorate([
-    (0, common_1.Get)(':slug'),
+    (0, common_1.Get)('by-slug/:slug'),
     __param(0, (0, common_1.Param)('slug')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -63,11 +57,17 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CategoryController.prototype, "getById", null);
 __decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], CategoryController.prototype, "getAll", null);
+__decorate([
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     (0, common_1.HttpCode)(200),
     (0, auth_decorator_1.Auth)(),
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('categoryId')),
+    (0, common_1.Put)(':id'),
+    __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, category_dto_1.CategoryDto]),
@@ -78,15 +78,16 @@ __decorate([
     (0, common_1.HttpCode)(200),
     (0, auth_decorator_1.Auth)(),
     (0, common_1.Post)(),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [category_dto_1.CategoryDto]),
     __metadata("design:returntype", Promise)
-], CategoryController.prototype, "create", null);
+], CategoryController.prototype, "create1", null);
 __decorate([
     (0, common_1.HttpCode)(200),
     (0, auth_decorator_1.Auth)(),
     (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('categoryId')),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)

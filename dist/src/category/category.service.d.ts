@@ -3,12 +3,22 @@ import { CategoryDto } from './category.dto';
 export declare class CategoryService {
     private prisma;
     constructor(prisma: PrismaService);
+    create(dto: CategoryDto): Promise<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        name: string;
+        slug: string;
+    }>;
     byId(id: number): Promise<{
         id: number;
         createdAt: Date;
         updatedAt: Date;
         name: string;
         slug: string;
+        _count: {
+            products: number;
+        };
         products: {
             id: number;
             createdAt: Date;
@@ -21,9 +31,6 @@ export declare class CategoryService {
             categoryId: number;
             userId: number;
         }[];
-        _count: {
-            products: number;
-        };
     }>;
     bySlug(slug: string): Promise<{
         id: number;
@@ -31,6 +38,9 @@ export declare class CategoryService {
         updatedAt: Date;
         name: string;
         slug: string;
+        _count: {
+            products: number;
+        };
         products: {
             id: number;
             createdAt: Date;
@@ -43,9 +53,6 @@ export declare class CategoryService {
             categoryId: number;
             userId: number;
         }[];
-        _count: {
-            products: number;
-        };
     }>;
     getAll(): Promise<{
         id: number;
@@ -53,6 +60,9 @@ export declare class CategoryService {
         updatedAt: Date;
         name: string;
         slug: string;
+        _count: {
+            products: number;
+        };
         products: {
             id: number;
             createdAt: Date;
@@ -65,9 +75,6 @@ export declare class CategoryService {
             categoryId: number;
             userId: number;
         }[];
-        _count: {
-            products: number;
-        };
     }[]>;
     update(id: number, dto: CategoryDto): Promise<{
         id: number;
@@ -83,7 +90,7 @@ export declare class CategoryService {
         name: string;
         slug: string;
     }>;
-    create(): Promise<{
+    create1(dto: CategoryDto): Promise<{
         id: number;
         createdAt: Date;
         updatedAt: Date;
